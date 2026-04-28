@@ -26,7 +26,11 @@ async function fetchProducts() {
 async function fetchCart() {
   // 請實作此函式
   const response = await axios.get(`${BASE_URL}/customer/${API_PATH}/cart`);
-  return response.data;
+  return {
+  carts: response.data.carts,
+  total: response.data.total,
+  finalTotal: response.data.finalTotal
+  };
 }
 
 /**
@@ -41,7 +45,7 @@ async function addToCart(productId, quantity) {
     productId:productId,
     quantity:quantity
   };
-  const response = await axios.post(`${BASE_URL}/customer/${API_PATH}/cart`, data);
+  const response = await axios.post(`${BASE_URL}/customer/${API_PATH}/cart`, {data});
   return response.data;
 }
 
@@ -54,7 +58,7 @@ async function addToCart(productId, quantity) {
 async function updateCartItem(cartId, quantity) {
   // 請實作此函式
   const data = { id: cartId, quantity: quantity };
-  const response = await axios.patch(`${BASE_URL}/customer/${API_PATH}/cart/`, data);
+  const response = await axios.patch(`${BASE_URL}/customer/${API_PATH}/cart/`, { data });
   return response.data;
 }
 
@@ -96,7 +100,7 @@ async function createOrder(userInfo) {
       payment: userInfo.payment
     }
   };
-  const response = await axios.post(`${BASE_URL}/customer/${API_PATH}/orders`, data);
+  const response = await axios.post(`${BASE_URL}/customer/${API_PATH}/orders`, { data });
   return response.data;
 }
 
