@@ -14,6 +14,9 @@ const { API_PATH, BASE_URL, ADMIN_TOKEN } = require('./config');
 async function fetchProducts() {
   // 請實作此函式
   // 回傳 response.data.products
+  const response = await axios.get(`${BASE_URL}/customer/${API_PATH}/products`);
+  return response.data.products;
+
 }
 
 /**
@@ -22,6 +25,8 @@ async function fetchProducts() {
  */
 async function fetchCart() {
   // 請實作此函式
+  const response = await axios.get(`${BASE_URL}/customer/${API_PATH}/cart`);
+  return response.data;
 }
 
 /**
@@ -32,6 +37,12 @@ async function fetchCart() {
  */
 async function addToCart(productId, quantity) {
   // 請實作此函式
+  const data = {
+    productId:productId,
+    quantity:quantity
+  };
+  const response = await axios.post(`${BASE_URL}/customer/${API_PATH}/cart`, data);
+  return response.data;
 }
 
 /**
@@ -42,7 +53,11 @@ async function addToCart(productId, quantity) {
  */
 async function updateCartItem(cartId, quantity) {
   // 請實作此函式
+  const data = { id: cartId, quantity: quantity };
+  const response = await axios.patch(`${BASE_URL}/customer/${API_PATH}/cart/`, data);
+  return response.data;
 }
+
 
 /**
  * 刪除購物車商品
@@ -51,6 +66,8 @@ async function updateCartItem(cartId, quantity) {
  */
 async function deleteCartItem(cartId) {
   // 請實作此函式
+  const response = await axios.delete(`${BASE_URL}/customer/${API_PATH}/cart/${cartId}`);
+  return response.data
 }
 
 /**
@@ -59,6 +76,8 @@ async function deleteCartItem(cartId) {
  */
 async function clearCart() {
   // 請實作此函式
+  const response = await axios.delete(`${BASE_URL}/customer/${API_PATH}/cart`);
+  return response.data;
 }
 
 /**
@@ -68,6 +87,17 @@ async function clearCart() {
  */
 async function createOrder(userInfo) {
   // 請實作此函式
+  const data = {
+    user: {
+      name: userInfo.name,
+      tel: userInfo.tel,
+      email: userInfo.email,
+      address: userInfo.address,
+      payment: userInfo.payment
+    }
+  };
+  const response = await axios.post(`${BASE_URL}/customer/${API_PATH}/orders`, data);
+  return response.data;
 }
 
 // ========== 管理員 API ==========
@@ -86,6 +116,11 @@ async function createOrder(userInfo) {
  */
 async function fetchOrders() {
   // 請實作此函式
+  const headers = {
+    authorization: ADMIN_TOKEN
+  };
+  const response = await axios.get(`${BASE_URL}/admin/${API_PATH}/orders`, { headers });
+  return response.data;
 }
 
 /**
@@ -96,7 +131,12 @@ async function fetchOrders() {
  */
 async function updateOrderStatus(orderId, isPaid) {
   // 請實作此函式
-}
+  const data = { 
+    id: orderId, 
+    paid: isPaid };
+  const response = await axios.patch(`${BASE_URL}/admin/${API_PATH}/orders/${orderId}`, data,);
+  return response.data;
+} 
 
 /**
  * 刪除訂單
@@ -105,6 +145,8 @@ async function updateOrderStatus(orderId, isPaid) {
  */
 async function deleteOrder(orderId) {
   // 請實作此函式
+  const response = await axios.delete(`${BASE_URL}/admin/${API_PATH}/orders/${orderId}`);
+  return response.data;
 }
 
 module.exports = {
