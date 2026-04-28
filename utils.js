@@ -11,6 +11,9 @@ const dayjs = require('dayjs');
  */
 function getDiscountRate(product) {
   // 請實作此函式
+  const discount = ((product.price / product.origin_price) * 100;
+  return `${Math.round(discount)} 折`;
+  
 }
 
 /**
@@ -20,6 +23,8 @@ function getDiscountRate(product) {
  */
 function getAllCategories(products) {
   // 請實作此函式
+  const categories = products.map(product => product.category);
+  return [...new Set(categories)];  
 }
 
 /**
@@ -30,6 +35,7 @@ function getAllCategories(products) {
 function formatDate(timestamp) {
   // 請實作此函式
   // 提示：dayjs.unix...
+  return dayjs.unix(timestamp).format('YYYY/MM/DD HH:mm');
 }
 
 /**
@@ -43,6 +49,10 @@ function getDaysAgo(timestamp) {
   // 1. 用 dayjs() 取得今天
   // 2. 用 dayjs.unix(timestamp) 取得日期
   // 3. 用 .diff() 計算天數差異
+  const today = dayjs();
+  const date = dayjs.unix(timestamp);
+  const daysAgo = today.diff(date, 'day');
+  return `${daysAgo} 天前`;
 }
 
 /**
