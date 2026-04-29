@@ -73,6 +73,26 @@ function getDaysAgo(timestamp) {
  */
 function validateOrderUser(data) {
   // 請實作此函式
+  const errors = [];
+  if (!data.name) {
+    errors.push('姓名不可為空');
+  }
+  if (!data.tel || !/^09\d{8}$/.test(data.tel)) {
+    errors.push('電話號碼格式不正確');
+  }
+  if (!data.email || !data.email.includes('@')) {
+    errors.push('電子郵件格式不正確');
+  }
+  if (!data.address || data.address.trim() === '') {
+    errors.push('地址不可為空');
+  }
+  if (!data.payment || !['ATM', 'Credit Card', 'Apple Pay'].includes(data.payment)) {
+    errors.push('付款方式不正確');
+  }
+  return {
+    isValid: errors.length === 0,
+    errors
+  };  
 }
 
 /**
@@ -87,6 +107,12 @@ function validateOrderUser(data) {
  */
 function validateCartQuantity(quantity) {
   // 請實作此函式
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
+    return {
+      isValid: false,
+      error: '數量必須是 1 到 99 的正整數'
+    };
+  }
 }
 
 /**
@@ -106,6 +132,7 @@ function validateCartQuantity(quantity) {
  */
 function formatCurrency(amount) {
   // 請實作此函式
+  return `NT$ ${amount.toLocaleString('zh-TW')}`;
 }
 
 module.exports = {
