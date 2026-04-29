@@ -11,8 +11,8 @@ const dayjs = require('dayjs');
  */
 function getDiscountRate(product) {
   // 請實作此函式
-  const discount = (product.price / product.origin_price) * 100;
-  return `${Math.round(discount)} 折`;
+  const discount = Math.round((product.price / product.origin_price) * 100);
+  return `${discount} 折`;
   
 }
 
@@ -50,9 +50,13 @@ function getDaysAgo(timestamp) {
   // 2. 用 dayjs.unix(timestamp) 取得日期
   // 3. 用 .diff() 計算天數差異
   const today = dayjs();
-  const date = dayjs.unix(timestamp);
-  const daysAgo = today.diff(date, 'day');
-  return `${daysAgo} 天前`;
+  const orderdate = dayjs.unix(timestamp);
+  const daysAgo = today.diff(orderdate, 'day');
+  if (daysAgo === 0) {
+    return '今天';
+  }else{
+    return `${daysAgo} 天前`;
+  }  
 }
 
 /**
