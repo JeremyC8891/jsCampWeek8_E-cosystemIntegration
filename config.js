@@ -7,7 +7,7 @@ require('dotenv').config({ path: '.env' });
 
 // API 設定（從 .env 讀取）
 const API_PATH = process.env.API_PATH;
-const BASE_URL = 'https://livejs-api.hexschool.io';
+const BASE_URL = 'https://livejs-api.hexschool.io/api/livejs/v1';
 const ADMIN_TOKEN = process.env.API_KEY;
 
 module.exports = {
