@@ -124,7 +124,7 @@ async function fetchOrders() {
     authorization: ADMIN_TOKEN
   };
   const response = await axios.get(`${BASE_URL}/admin/${API_PATH}/orders`, { headers });
-  return response.data;
+  return response.data.orders;
 }
 
 /**
@@ -135,10 +135,13 @@ async function fetchOrders() {
  */
 async function updateOrderStatus(orderId, isPaid) {
   // 請實作此函式
+  const headers = {
+    authorization: ADMIN_TOKEN
+  };
   const data = { 
     id: orderId, 
     paid: isPaid };
-  const response = await axios.patch(`${BASE_URL}/admin/${API_PATH}/orders/${orderId}`, data,);
+  const response = await axios.put(`${BASE_URL}/admin/${API_PATH}/orders/${orderId}`, { data }, { headers });
   return response.data;
 } 
 
@@ -149,7 +152,10 @@ async function updateOrderStatus(orderId, isPaid) {
  */
 async function deleteOrder(orderId) {
   // 請實作此函式
-  const response = await axios.delete(`${BASE_URL}/admin/${API_PATH}/orders/${orderId}`);
+  const headers = {
+    authorization: ADMIN_TOKEN
+  };
+  const response = await axios.delete(`${BASE_URL}/admin/${API_PATH}/orders/${orderId}`, { headers });
   return response.data;
 }
 
