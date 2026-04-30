@@ -11,7 +11,7 @@ const dayjs = require('dayjs');
  */
 function getDiscountRate(product) {
   // 請實作此函式
-  const discount = Math.round((product.price / product.origin_price) * 100);
+  const discount = Math.round((product.price / product.origin_price) * 10);
   return `${discount} 折`;
   
 }
@@ -74,7 +74,7 @@ function getDaysAgo(timestamp) {
 function validateOrderUser(data) {
   // 請實作此函式
   const errors = [];
-  if (!data.name) {
+  if (!data.name || data.name.trim() === '') {
     errors.push('姓名不可為空');
   }
   if (!data.tel || !/^09\d{8}$/.test(data.tel)) {
@@ -111,6 +111,10 @@ function validateCartQuantity(quantity) {
     return {
       isValid: false,
       error: '數量必須是 1 到 99 的正整數'
+    };
+  }else {
+    return {
+      isValid: true
     };
   }
 }
