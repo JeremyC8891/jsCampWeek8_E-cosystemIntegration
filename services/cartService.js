@@ -58,6 +58,25 @@ async function updateProduct(cartId, quantity) {
   // 提示：先用 utils validateCartQuantity() 驗證數量，驗證失敗時回傳 { success: false, error: ... }
   // 驗證通過後，呼叫 updateCartItem() 更新數量
   // 使用 try/catch 處理錯誤，回傳格式：{ success: true, data: ... } / { success: false, error: ... }
+  const validation = validateCartQuantity(quantity);
+  if (!validation.isValid) {
+    return {
+      success: false,
+      error: validation.error
+    };
+  }
+  try {
+    const data = await updateCartItem(cartId, quantity);
+    return {
+      success: true,
+      data
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message
+    };
+  }
 }
 
 /**
