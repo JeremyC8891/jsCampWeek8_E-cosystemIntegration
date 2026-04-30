@@ -25,7 +25,7 @@ async function fetchProducts() {
  */
 async function fetchCart() {
   // 請實作此函式
-  const response = await axios.get(`${BASE_URL}/customer/${API_PATH}/cart`);
+  const response = await axios.get(`${BASE_URL}/customer/${API_PATH}/carts`);
   return {
   carts: response.data.carts,
   total: response.data.total,
@@ -45,7 +45,7 @@ async function addToCart(productId, quantity) {
     productId:productId,
     quantity:quantity
   };
-  const response = await axios.post(`${BASE_URL}/customer/${API_PATH}/cart`, {data});
+  const response = await axios.post(`${BASE_URL}/customer/${API_PATH}/carts`, {data});
   return response.data;
 }
 
@@ -58,7 +58,7 @@ async function addToCart(productId, quantity) {
 async function updateCartItem(cartId, quantity) {
   // 請實作此函式
   const data = { id: cartId, quantity: quantity };
-  const response = await axios.patch(`${BASE_URL}/customer/${API_PATH}/cart/`, { data });
+  const response = await axios.patch(`${BASE_URL}/customer/${API_PATH}/carts`, { data });
   return response.data;
 }
 
@@ -70,7 +70,7 @@ async function updateCartItem(cartId, quantity) {
  */
 async function deleteCartItem(cartId) {
   // 請實作此函式
-  const response = await axios.delete(`${BASE_URL}/customer/${API_PATH}/cart/${cartId}`);
+  const response = await axios.delete(`${BASE_URL}/customer/${API_PATH}/carts/${cartId}`);
   return response.data
 }
 
@@ -80,7 +80,7 @@ async function deleteCartItem(cartId) {
  */
 async function clearCart() {
   // 請實作此函式
-  const response = await axios.delete(`${BASE_URL}/customer/${API_PATH}/cart`);
+  const response = await axios.delete(`${BASE_URL}/customer/${API_PATH}/carts`);
   return response.data;
 }
 
@@ -140,8 +140,9 @@ async function updateOrderStatus(orderId, isPaid) {
   };
   const data = { 
     id: orderId, 
-    paid: isPaid };
-  const response = await axios.put(`${BASE_URL}/admin/${API_PATH}/orders/${orderId}`, { data }, { headers });
+    paid: isPaid 
+  };
+  const response = await axios.put(`${BASE_URL}/admin/${API_PATH}/orders`, { data }, { headers });
   return response.data;
 } 
 
